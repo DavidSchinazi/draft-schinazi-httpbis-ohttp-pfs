@@ -13,7 +13,12 @@ Expires: 7 January 2027
 
 Abstract
 
-   TODO Abstract
+   Oblivious HTTP (OHTTP) is a protocol for forwarding encrypted HTTP
+   messages.  It does not provide Perfect Forward Secrecy (PFS).
+   Chunked OHTTP expands OHTTP to be suitable for longer-lived streams,
+   but still does not offer PFS.  Combined, this is leading sensitive
+   traffic to de deployed at scale without PFS.  This document proposes
+   a solution.
 
 About This Document
 
@@ -68,15 +73,34 @@ Table of Contents
 
    1.  Introduction
    2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+   3.  Mechanism
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
    Acknowledgments
    Author's Address
 
 1.  Introduction
 
-   TODO Introduction
+   Oblivious HTTP ([OHTTP]) is a protocol for forwarding encrypted HTTP
+   messages.  It does not provide Perfect Forward Secrecy (PFS).
+   Chunked OHTTP ([CHUNKED]) expands OHTTP to be suitable for longer-
+   lived streams, but still does not offer PFS.
+
+   Unfortunately, providing a streaming abstraction over OHTTP makes it
+   an attractive tool to provide privacy.  This is leading application
+   designers to build Remote Procedure Call (RPC) systems over this
+   bidirectional stream, without realizing the security cost of losing
+   PFS.
+
+   This document proposes a solution that offers PFS to all data sent
+   over OHTTP apart from the client's first flight.  This provides
+   privacy and security properties similar to TLS 0-RTT (see Section 2.3
+   of [TLS]) run over HTTP CONNECT (see Section 9.3.6 of [HTTP]) without
+   losing the performance nor request-correlation-prevention properties
+   of OHTTP.
 
 2.  Conventions and Definitions
 
@@ -86,15 +110,27 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+3.  Mechanism
 
-   TODO Security
+   This section is currently a work in progress.  Please see the
+   editor's copy (https://davidschinazi.github.io/draft-schinazi-
+   httpbis-ohttp-pfs/draft-schinazi-httpbis-ohttp-pfs.html).
 
-4.  IANA Considerations
+4.  Security Considerations
 
-   This document has no IANA actions.
+   TODO
 
-5.  Normative References
+5.  IANA Considerations
+
+   TODO
+
+6.  References
+
+6.1.  Normative References
+
+   [OHTTP]    Thomson, M. and C. A. Wood, "Oblivious HTTP", RFC 9458,
+              DOI 10.17487/RFC9458, January 2024,
+              <https://www.rfc-editor.org/rfc/rfc9458>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -105,9 +141,30 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+6.2.  Informative References
+
+   [CHUNKED]  Pauly, T. and M. Thomson, "Chunked Oblivious HTTP
+              Messages", Work in Progress, Internet-Draft, draft-ietf-
+              ohai-chunked-ohttp-08, 18 February 2026,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-ohai-
+              chunked-ohttp-08>.
+
+   [HTTP]     Fielding, R., Ed., Nottingham, M., Ed., and J. Reschke,
+              Ed., "HTTP Semantics", STD 97, RFC 9110,
+              DOI 10.17487/RFC9110, June 2022,
+              <https://www.rfc-editor.org/rfc/rfc9110>.
+
+   [TLS]      Rescorla, E., "The Transport Layer Security (TLS) Protocol
+              Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
+              <https://www.rfc-editor.org/rfc/rfc8446>.
+
 Acknowledgments
 
-   TODO acknowledge.
+   Thank you to Martin Thomson and Chris Wood for asking
+   (https://mailarchive.ietf.org/arch/msg/ohai/
+   Vrh25BxK4wmIDJxeRYrYj6U1-g0/) me
+   (https://mailarchive.ietf.org/arch/msg/ohai/
+   AAWH6Cp3OmxwEuzoxehYFh1O4ck/) to write this draft.
 
 Author's Address
 

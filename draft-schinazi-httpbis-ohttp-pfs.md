@@ -39,34 +39,56 @@ informative:
 
 --- abstract
 
-TODO Abstract
-
+Oblivious HTTP (OHTTP) is a protocol for forwarding encrypted HTTP messages.
+It does not provide Perfect Forward Secrecy (PFS). Chunked OHTTP expands
+OHTTP to be suitable for longer-lived streams, but still does not offer PFS.
+Combined, this is leading sensitive traffic to de deployed at scale without
+PFS. This document proposes a solution.
 
 --- middle
 
 # Introduction
 
-TODO Introduction
+Oblivious HTTP ({{!OHTTP=RFC9458}}) is a protocol for forwarding encrypted
+HTTP messages. It does not provide Perfect Forward Secrecy (PFS). Chunked
+OHTTP ({{?CHUNKED=I-D.ietf-ohai-chunked-ohttp}}) expands OHTTP to be
+suitable for longer-lived streams, but still does not offer PFS.
 
+Unfortunately, providing a streaming abstraction over OHTTP makes it an
+attractive tool to provide privacy. This is leading application designers
+to build Remote Procedure Call (RPC) systems over this bidirectional
+stream, without realizing the security cost of losing PFS.
+
+This document proposes a solution that offers PFS to all data sent over
+OHTTP apart from the client's first flight. This provides privacy and
+security properties similar to TLS 0-RTT (see {{Section 2.3 of ?TLS=RFC8446}})
+run over HTTP CONNECT (see {{Section 9.3.6 of ?HTTP=RFC9110}})
+without losing the performance nor request-correlation-prevention
+properties of OHTTP.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
+# Mechanism
+
+This section is currently a work in progress. Please see the
+[editor's copy](https://davidschinazi.github.io/draft-schinazi-httpbis-ohttp-pfs/draft-schinazi-httpbis-ohttp-pfs.html).
 
 # Security Considerations
 
-TODO Security
-
+TODO
 
 # IANA Considerations
 
-This document has no IANA actions.
-
+TODO
 
 --- back
 
 # Acknowledgments
 {:numbered="false"}
 
-TODO acknowledge.
+Thank you to Martin Thomson and Chris Wood for
+[asking](https://mailarchive.ietf.org/arch/msg/ohai/Vrh25BxK4wmIDJxeRYrYj6U1-g0/)
+[me](https://mailarchive.ietf.org/arch/msg/ohai/AAWH6Cp3OmxwEuzoxehYFh1O4ck/)
+to write this draft.

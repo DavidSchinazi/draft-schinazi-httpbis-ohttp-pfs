@@ -64,22 +64,76 @@ OHTTP apart from the client's first flight. This provides privacy and
 security properties similar to TLS 0-RTT (see {{Section 2.3 of ?TLS=RFC8446}})
 run over HTTP CONNECT (see {{Section 9.3.6 of ?HTTP=RFC9110}})
 without losing the performance nor request-correlation-prevention
-properties of OHTTP.
+properties of OHTTP. This mechanism is designed to be backwards compatible
+with unextended OHTTP.
 
 # Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
 
+This document uses terminology from {{!HPKE=RFC9180}}.
+
 # Mechanism
 
-This section is currently a work in progress. Please see the
-[editor's copy](https://davidschinazi.github.io/draft-schinazi-httpbis-ohttp-pfs/draft-schinazi-httpbis-ohttp-pfs.html).
+This mechanism relies on the generation of two more ephemeral key pairs per
+OHTTP request: one for the client (denoted `skC, pkC`) and one for the
+gateway (not denoted since it only exists inside of `SetupBaseS`).
+
+The client starts by generating a second ephemeral key pair, using the same KEM
+it has selected for this request:
+
+~~~
+skC, pkC = GenerateKeyPair()
+~~~
+
+The client then adds the serialized public key
+`SerializePublicKey(pkC)` to its Binary HTTP ({{!BHTTP=RFC9292}})
+request headers using the "OHTTP-PFS" header. That header is a
+Structured Header Field Item of type Byte Sequence as defined in
+{{Section 3.3.5 of !STRUCTURED=RFC9651}}. For example:
+
+~~~
+ohttp-pfs: :dGhpcyBpcyBhIHB1YmxpYyBrZXk=:
+~~~
+
+The client then encrypts the Binary HTTP request following the procedure in
+{{Section 4.3 of OHTTP}}. The gateway follows the procedure in that same
+section to recover the Binary HTTP request.
+
+The gateway then checks the request for the presence of the "ohttp-pfs"
+header to determine whether this extension is in use. If it is, it uses
+the HPKE receiver context (`rctxt`) from the OHTTP request as the HPKE
+context (`req_context`) as follows:
+
+~~~
+req_secret = req_context.Export("OHTTP PFS Request Derivation",
+                                max(Nn, Nk))
+info2 = concat(encode_str("OHTTP PFS Response"),
+               encode(1, 0),
+               encode(1, key_id),
+               encode(2, kem_id),
+               encode(2, kdf_id),
+               encode(2, aead_id),
+               req_secret)
+enc2, pctxt = SetupBaseS(pkC, info2)
+ct2 = pctxt.Seal("", response)
+enc_response = concat(enc2, ct2)
+~~~
+
+The client then reverses this process to extract the response.
+
+This document's editor ran out of time right before the draft deadline, so
+this section is still a work in progress. Please check the
+[editor's copy](https://davidschinazi.github.io/draft-schinazi-httpbis-ohttp-pfs/draft-schinazi-httpbis-ohttp-pfs.html),
+they most likely have made some progress since then.
 
 # Security Considerations
 
 TODO
 
 # IANA Considerations
+
+## OHTTP-PFS HTTP Header Field
 
 TODO
 

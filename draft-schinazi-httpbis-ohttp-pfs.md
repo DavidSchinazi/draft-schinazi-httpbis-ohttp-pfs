@@ -203,7 +203,7 @@ the response is tied to information in the request.
 If chunked OHTTP {{CHUNKED}} is in use, the response media type for this
 extension is "message/ohttp-chunked-res-pfs".
 
-# Chunked OHTTP
+# Chunked OHTTP {#chunked}
 
 Chunked OHTTP ({{CHUNKED}}) is different in that the client can send more data
 after its first flight.
@@ -278,6 +278,13 @@ context, it acts on the ciphertext `elff_chunk` as follows:
 
 The security considerations described in {{Section 6 of OHTTP}} and
 {{Section 7 of CHUNKED}} apply to this document as well.
+
+As mentioned in {{Section 7.2 of CHUNKED}}, interactivity can cause the
+gateway to learn the round trip to the client. The PFS mechanism can
+increase that risk if the client sends its last first flight chunk
+(see {{chunked}}) immediately when it receives the gateway's first flight.
+To avoid this, clients MUST NOT send their last first flight chunk until
+they have more application data to send to the gateway.
 
 # IANA Considerations
 
@@ -391,3 +398,5 @@ Thank you to Martin Thomson for
 to write this draft, and to Chris Wood for
 [supporting it](https://mailarchive.ietf.org/arch/msg/ohai/bLD_klUzBwVHUPeXI4a5NRIaoT8/)
  more than two years before it was written.
+
+Thanks to Martin Thomson for reviewing this document.

@@ -1387,7 +1387,7 @@ the response is tied to information in the request.<a href="#section-4-2" class=
 extension is "message/ohttp-chunked-res-pfs".<a href="#section-4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="chunked-ohttp">
+<div id="chunked">
 <section id="section-5">
       <h2 id="name-chunked-ohttp">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-chunked-ohttp" class="section-name selfRef">Chunked OHTTP</a>
@@ -1478,6 +1478,12 @@ ASCII-encoded string "final".<a href="#section-5-9.5.1" class="pilcrow">¶</a></
       </h2>
 <p id="section-6-1">The security considerations described in <span><a href="https://rfc-editor.org/rfc/rfc9458#section-6" class="relref">Section 6</a> of [<a href="#OHTTP" class="cite xref">OHTTP</a>]</span> and
 <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-ohai-chunked-ohttp-08#section-7" class="relref">Section 7</a> of [<a href="#CHUNKED" class="cite xref">CHUNKED</a>]</span> apply to this document as well.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">As mentioned in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-ohai-chunked-ohttp-08#section-7.2" class="relref">Section 7.2</a> of [<a href="#CHUNKED" class="cite xref">CHUNKED</a>]</span>, interactivity can cause the
+gateway to learn the round trip to the client. The PFS mechanism can
+increase that risk if the client sends its last first flight chunk
+(see <a href="#chunked" class="auto internal xref">Section 5</a>) immediately when it receives the gateway's first flight.
+To avoid this, clients <span class="bcp14">MUST NOT</span> send their last first flight chunk until
+they have more application data to send to the gateway.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="iana-considerations">
@@ -1703,6 +1709,7 @@ identify encapsulated binary HTTP responses when using the PFS extension.<a href
 to write this draft, and to Chris Wood for
 <a href="https://mailarchive.ietf.org/arch/msg/ohai/bLD_klUzBwVHUPeXI4a5NRIaoT8/">supporting it</a>
  more than two years before it was written.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">Thanks to Martin Thomson for reviewing this document.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">

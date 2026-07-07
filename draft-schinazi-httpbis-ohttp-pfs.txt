@@ -316,6 +316,13 @@ Table of Contents
    The security considerations described in Section 6 of [OHTTP] and
    Section 7 of [CHUNKED] apply to this document as well.
 
+   As mentioned in Section 7.2 of [CHUNKED], interactivity can cause the
+   gateway to learn the round trip to the client.  The PFS mechanism can
+   increase that risk if the client sends its last first flight chunk
+   (see Section 5) immediately when it receives the gateway's first
+   flight.  To avoid this, clients MUST NOT send their last first flight
+   chunk until they have more application data to send to the gateway.
+
 7.  IANA Considerations
 
 7.1.  OHTTP-PFS HTTP Header Field
@@ -418,6 +425,8 @@ Acknowledgments
    for supporting it (https://mailarchive.ietf.org/arch/msg/ohai/
    bLD_klUzBwVHUPeXI4a5NRIaoT8/) more than two years before it was
    written.
+
+   Thanks to Martin Thomson for reviewing this document.
 
 Author's Address
 

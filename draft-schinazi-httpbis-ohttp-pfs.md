@@ -386,7 +386,8 @@ Change controller:
 # Acknowledgments
 {:numbered="false"}
 
-Thank you to Martin Thomson and Chris Wood for
-[asking](https://mailarchive.ietf.org/arch/msg/ohai/Vrh25BxK4wmIDJxeRYrYj6U1-g0/)
-[me](https://mailarchive.ietf.org/arch/msg/ohai/AAWH6Cp3OmxwEuzoxehYFh1O4ck/)
-to write this draft.
+Thank you to Martin Thomson for
+[asking me](https://mailarchive.ietf.org/arch/msg/ohai/Vrh25BxK4wmIDJxeRYrYj6U1-g0/)
+to write this draft, and to Chris Wood for
+[supporting it](https://mailarchive.ietf.org/arch/msg/ohai/bLD_klUzBwVHUPeXI4a5NRIaoT8/)
+ more than two years before it was written.

@@ -4,8 +4,8 @@
 
 HTTP                                                         D. Schinazi
 Internet-Draft                                                Google LLC
-Intended status: Standards Track                             7 July 2026
-Expires: 8 January 2027
+Intended status: Standards Track                             8 July 2026
+Expires: 9 January 2027
 
 
           A Perfect Forward Secure Extension to Oblivious HTTP
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2027.
+   This Internet-Draft will expire on 9 January 2027.
 
 Copyright Notice
 
@@ -99,13 +99,24 @@ Table of Contents
    bidirectional stream, without realizing the security cost of losing
    PFS.
 
+   When PFS is needed, a simpler solution is to avoid OHTTP entirely and
+   instead use TLS ([TLS]) over HTTP CONNECT (see Section 9.3.6 of
+   [HTTP]).  However, completing the TLS handshake takes a full round
+   trip.  For latency-sensitive applications, TLS 0-RTT (see Section 2.3
+   of [TLS]) can be used; that has the advantage of allowing non-PFS
+   data for the client's first flight and then PFS for all other data.
+   TLS 0-RTT does however have one relevant limitation: it allows a TLS
+   server to link distinct 0-RTT requests by encoding identifying
+   information in TLS session tickets.  That makes TLS 0-RTT unsuitable
+   for use cases that require unlinkability between requests, which
+   Chunked OHTTP provides.
+
    This document proposes a solution that offers PFS to all data sent
    over OHTTP apart from the client's first flight.  This provides
-   privacy and security properties similar to TLS 0-RTT (see Section 2.3
-   of [TLS]) run over HTTP CONNECT (see Section 9.3.6 of [HTTP]) without
-   losing the performance nor request-correlation-prevention properties
-   of OHTTP.  This mechanism is designed to be backwards compatible with
-   unextended OHTTP.
+   privacy and security properties similar to TLS 0-RTT over HTTP
+   CONNECT without losing the performance nor request-correlation-
+   prevention properties of OHTTP.  This mechanism is designed to be
+   backwards compatible with unextended OHTTP.
 
 2.  Conventions and Definitions
 

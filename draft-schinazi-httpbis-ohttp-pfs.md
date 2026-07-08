@@ -59,13 +59,24 @@ attractive tool to provide privacy. This is leading application designers
 to build Remote Procedure Call (RPC) systems over this bidirectional
 stream, without realizing the security cost of losing PFS.
 
+When PFS is needed, a simpler solution is to avoid OHTTP entirely and
+instead use TLS ({{?TLS=RFC8446}}) over HTTP CONNECT
+(see {{Section 9.3.6 of ?HTTP=RFC9110}}). However, completing the TLS
+handshake takes a full round trip. For latency-sensitive applications,
+TLS 0-RTT (see {{Section 2.3 of ?TLS=RFC8446}}) can be used; that has the
+advantage of allowing non-PFS data for the client's first flight and then
+PFS for all other data. TLS 0-RTT does however have one relevant
+limitation: it allows a TLS server to link distinct 0-RTT requests by
+encoding identifying information in TLS session tickets. That makes
+TLS 0-RTT unsuitable for use cases that require unlinkability between
+requests, which Chunked OHTTP provides.
+
 This document proposes a solution that offers PFS to all data sent over
 OHTTP apart from the client's first flight. This provides privacy and
-security properties similar to TLS 0-RTT (see {{Section 2.3 of ?TLS=RFC8446}})
-run over HTTP CONNECT (see {{Section 9.3.6 of ?HTTP=RFC9110}})
-without losing the performance nor request-correlation-prevention
-properties of OHTTP. This mechanism is designed to be backwards compatible
-with unextended OHTTP.
+security properties similar to TLS 0-RTT over HTTP CONNECT without losing
+the performance nor request-correlation-prevention properties of OHTTP.
+This mechanism is designed to be backwards compatible with unextended
+OHTTP.
 
 # Conventions and Definitions
 

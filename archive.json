@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T02:35:01.545697+00:00",
+  "timestamp": "2026-07-09T02:27:13.888208+00:00",
   "repo": "DavidSchinazi/draft-schinazi-httpbis-ohttp-pfs",
   "labels": [
     {
@@ -49,6 +49,23 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 1,
+      "id": "I_kwDOTPiC5M8AAAABIB3hLg",
+      "title": "Should we allow downgrade/fallback?",
+      "url": "https://github.com/DavidSchinazi/draft-schinazi-httpbis-ohttp-pfs/issues/1",
+      "state": "OPEN",
+      "author": "DavidSchinazi",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The original design in draft-schinazi-httpbis-ohttp-pfs-00 uses a BHTTP header to send the client's KEM public key `pkC` to the gateway. As @martinthomson points out, that's a layering violation that requires the OHTTP layer to know about the bits its encrypting instead of treating them as opaque.\n\nWe could put this into the OHTTP request format, but that would break backwards compatibility and remove the gateway's ability to choose to skip PFS in some cases.\n\nIf we went that route, we'd need something like the extensions from [draft-schinazi-httpbis-ohttp-ext-key-config](https://davidschinazi.github.io/draft-schinazi-httpbis-ohttp-ext-key-config/draft-schinazi-httpbis-ohttp-ext-key-config.html) to allow the gateway to tell the client that it supports PFS.\n\nBoth options are reasonable to me.",
+      "createdAt": "2026-07-08T02:29:39Z",
+      "updatedAt": "2026-07-08T02:31:15Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": []
 }
